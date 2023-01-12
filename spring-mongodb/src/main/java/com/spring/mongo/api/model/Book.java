@@ -4,8 +4,7 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.Transient;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import com.mongodb.lang.NonNull;
-
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -22,12 +21,16 @@ public class Book {
 	public static final String SEQUENCE_NAME="user_sequence";
 	@Id
 	private int id;
+	@NotNull(message="Please Enter Vaild Data")
 	private String bookName;
-	private String authorName;
+	@NotNull(message="Please Enter Vaild Data")
+	private String author;
+	@NotNull(message="Please Enter Vaild Data")
 	private String bookPublishdate;
+	@NotNull(message="Please Enter Vaild Data")
     private int numberOfPagesInBook;
+	@NotNull(message="Please Enter Vaild Data")
 	private int priceOfBook;
-	
 	boolean isActive=true;
 
 }

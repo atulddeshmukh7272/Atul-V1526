@@ -16,6 +16,8 @@ import com.spring.mongo.api.model.Book;
 import com.spring.mongo.api.service.BookServiceImpl;
 import com.spring.mongo.api.service.SequenceGeneratorService;
 
+import jakarta.validation.Valid;
+
 @RestController
 public class BookController {
 
@@ -26,7 +28,7 @@ public class BookController {
 	SequenceGeneratorService generatorService;
 
 	@PostMapping("/book")
-	public String saveBook(@RequestBody Book book) {
+	public String saveBook( @Valid @RequestBody Book book) {
 	book.setId(generatorService.getSequenceNumber(Book.SEQUENCE_NAME));   //go into database and check last id and set here
 		book.setActive(true);
 	if( bookService.save(book)){
@@ -37,8 +39,7 @@ public class BookController {
 	}
 	@GetMapping("/book")
 	public Book getBook(@RequestParam("id") Integer id) {
-
-		return bookService.findById(id);
+			return bookService.findById(id);
 	}
 
 	@DeleteMapping("/book/{id}")
@@ -46,12 +47,12 @@ public class BookController {
 		if (bookService.deleteId(id)) {
 			return "deleted";
 		} else {
-			  throw new BookException("You Enter id data is NOT present");
+			  throw new BookException("data not present");
 		}
 	}
 
 	@PutMapping("/book/{id}")
-	public String updataBook(@PathVariable int id, @RequestBody Book book) {
+	public String updataBook(@PathVariable("id") int id, @RequestBody Book book) {
 		if (bookService.updateBook(id, book))
 			return "data updated";
 		else
@@ -60,20 +61,23 @@ public class BookController {
 	}
 
 	@GetMapping("/getBookByName")
-	public List<Book> getBookByName(@RequestParam("bookName") String BookName) {
+	public List<Book> getBookByName(@RequestParam("bookName") String bookName) {
 		
-		List<Book> list=bookService.findByBookName(BookName);
+		List<Book> list=bookService.findByBookName(bookName);
 			if(!list.isEmpty())
 				return list;
 			else
-				throw new BookException("Not present");
+				throw new BookException(" BookName Not present");
 	}
 
-	@GetMapping("/getBookAuthorName")
-	public List<Book> getBookByauthorName(@RequestParam("authorName") String authorName) {
-		return bookService.findByauthorName(authorName);
- 
+
+	@GetMapping("/getBookByAuthor")
+	public List<Book> getBookByAuthor(@RequestParam("authorName") String authorName) {
+		System.out.println(authorName);
+		return bookService.findByAuthorName(authorName);
 	}
+	
+	
 	
 	@GetMapping("/books")
 		public List<Book> getAllBook(){	
@@ -81,13 +85,14 @@ public class BookController {
 		
 	}
 
-	@DeleteMapping("/bookk/{id}")  //soft delete
+	@DeleteMapping("/delt/{id}")  //soft delete
 	public String deleteBookById(@PathVariable int id) {
 		if(bookService.deleteBookById(id))
-			return "data datadeleted";
+			return "data deleted";
 		else
-			return "data not datadeleted";
-		
+			return "data not deleted";
 	}
+	
+	
 
 }

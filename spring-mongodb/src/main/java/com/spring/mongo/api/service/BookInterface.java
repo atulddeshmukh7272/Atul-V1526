@@ -19,9 +19,11 @@ public interface BookInterface {
 
 	public List<Book> findByBookName(String bookName);
 
-	public List<Book> findByauthorName(String authorName);
+	//public List<Book> getauthor(String authorName);
 	
 	public boolean deleteBookById(Integer id);//soft delete
+	
+    public List<Book> findByAuthorName(String authorName);
 
 	//public List<Book> getAllBookInfo();
 

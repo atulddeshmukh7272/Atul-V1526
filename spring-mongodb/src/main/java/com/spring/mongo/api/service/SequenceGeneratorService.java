@@ -27,7 +27,7 @@ public class SequenceGeneratorService {
     	public int getSequenceNumber(String seqName)
     	{
             Query query = new Query(Criteria.where("id").is(seqName));          //update the sequence number       
-            Update update = new Update().inc("seq", 50);                        //update in the  in document   
+            Update update = new Update().inc("seq", 1);                        //update in the  in document   
             DataBaseSequence counter = mongoOperations.findAndModify(query, update,options().returnNew(true).upsert(true),DataBaseSequence.class);
             return !Objects.isNull(counter) ? counter.getSeq() : 1;
     	}

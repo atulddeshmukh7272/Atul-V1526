@@ -59,8 +59,11 @@ public class BookServiceImpl implements BookInterface {
 
 	@Override
 	public Book findById(Integer id) {
-		return bookRepository.findByIdAndIsActiveTrue(id);
-
+		Book obj= bookRepository.findByIdAndIsActiveTrue(id);
+		if(obj!=null)
+			return obj;
+		else
+			throw new BookException("Not Found");
 	}
 
 	@Override
@@ -77,19 +80,23 @@ public class BookServiceImpl implements BookInterface {
 	@Override
 	public boolean updateBook(Integer id, Book book) {
 
-		Book obj = bookRepository.findByIdAndIsActiveTrue(id); // .findById(id).get();
-		
+		Book obj = bookRepository.findByIdAndIsActiveTrue(id); // findById(id).get();//
+		if(obj!=null) {
 		
 		if (book.getBookName() != null)
 			obj.setBookName(book.getBookName());                //if we only change one data and we dont wont to affect other data ie null...
-		if(book.getAuthorName() !=null)
-			obj.setAuthorName(book.getAuthorName());
+		if(book.getAuthor() !=null)
+			obj.setAuthor(book.getAuthor());
 		if(book.getBookPublishdate() !=null)
 			obj.setBookPublishdate(book.getBookPublishdate());
 		if(book.getNumberOfPagesInBook() !=0)
 			obj.setNumberOfPagesInBook(book.getNumberOfPagesInBook());
 		if(book.getPriceOfBook() !=0)
 			obj.setPriceOfBook(book.getPriceOfBook());
+		}
+		else {
+			throw new BookException("book information is not exit");
+		}
 //
 //		obj.setAuthorName(book.getAuthorName());
 //		obj.setBookName(book.getBookName());
@@ -104,18 +111,19 @@ public class BookServiceImpl implements BookInterface {
 
 	}
 
+	
 	@Override
-	public List<Book> findByauthorName(String authorName) {
-		// TODO Auto-generated method stub
-		return bookRepository.findAllByAuthorNameAndIsActiveTrue(authorName);
-
+	public List<Book> findByAuthorName(String authorName) {
+		
+		return bookRepository.findAllByAuthorAndIsActiveTrue(authorName);
 	}
+
 
 	@Override
 	public boolean deleteBookById(Integer id) { 
 		
 	Book obj = bookRepository.findByIdAndIsActiveTrue(id);     //soft delete
-	System.out.println(obj);	
+	//System.out.println(obj);	
 	if(obj!=null)
 		{
 			obj.setActive(false);
@@ -125,5 +133,8 @@ public class BookServiceImpl implements BookInterface {
 		else
 			return false;
 	}
+
+
+
 
 }

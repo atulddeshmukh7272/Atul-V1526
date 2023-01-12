@@ -1,4 +1,5 @@
 package com.spring.mongo.api.model;
+
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -10,12 +11,10 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
- public class DataBaseSequence {
+public class DataBaseSequence {
 
- @Id
- private String id;
- private int seq;
+	@Id
+	private String id;
+	private int seq;
 
- 
 }
-
