@@ -8,20 +8,19 @@ import org.springframework.stereotype.Service;
 
 import com.rating.service.entity.Rating;
 import com.rating.service.repository.RatingRepository;
+
 @Service
-public class RatingServiceImpl  implements RatingService{
+public class RatingServiceImpl implements RatingService {
 	@Autowired
 	private RatingRepository ratingRepository;
 
 	@Override
 	public Rating create(Rating rating) {
-		// TODO Auto-generated method stub
 		return ratingRepository.save(rating);
 	}
 
 	@Override
 	public List<Rating> getRating() {
-		// TODO Auto-generated method stub
 		return ratingRepository.findAll();
 	}
 
@@ -35,6 +34,11 @@ public class RatingServiceImpl  implements RatingService{
 	public List<Rating> getRatingByHotelId(String hotelId) {
 		// TODO Auto-generated method stub
 		return ratingRepository.findByHotelId(hotelId);
+	}
+
+	@Override
+	public List<Rating> getAll() {
+		return ratingRepository.findAll();
 	}
 
 }
