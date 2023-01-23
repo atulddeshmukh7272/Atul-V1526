@@ -9,8 +9,10 @@ import org.springframework.web.bind.annotation.RestController;
 import com.spring.mongo.api.service.ProducerBook;
 
 
+
+
 @RestController
-@RequestMapping("/rest")
+@RequestMapping("/restbook")
 public class BookKafkaController {
 
 	
